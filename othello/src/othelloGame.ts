@@ -14,7 +14,8 @@ export const initializeBoard = (): Board => {
 export const getOpponent = (player: CellState): CellState => {
   if (player === 'black') return 'white';
   if (player === 'white') return 'black';
-  return 'empty'; // Should not happen in game logic
+  // 発生しないはずのケースだが、念のためエラーをスローして早期発見を促す
+  throw new Error(`Invalid player state: ${player}`); 
 };
 
 // Directions for checking flips

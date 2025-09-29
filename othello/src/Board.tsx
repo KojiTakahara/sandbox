@@ -17,17 +17,11 @@ const Board: React.FC = () => {
     const newBoard = placeStoneAndFlip(board, row, col, currentPlayer);
     setBoard(newBoard);
 
-    const nextPlayer = currentPlayer === 'black' ? 'white' : 'black';
-    const nextPlayerValidMoves = getValidMoves(newBoard, nextPlayer);
-
-    if (nextPlayerValidMoves.length === 0) {
-      // Current player has no moves, check if other player has moves
-      const otherPlayer = nextPlayer === 'black' ? 'white' : 'black';
-      const otherPlayerValidMoves = getValidMoves(newBoard, otherPlayer);
-      if (otherPlayerValidMoves.length === 0) {
-        // Both players have no moves, game over
+    // ゲーム終了判定と勝者決定ロジックを共通化
+    const evaluateGameEnd = (currentBoard: OthelloBoardType) => {
+      if (checkGameOver(currentBoard)) {
         setGameOver(true);
-        const score = getScore(newBoard);
+        const score = getScore(currentBoard);
         if (score.black > score.white) {
           setWinner('black');
         } else if (score.white > score.black) {
@@ -35,25 +29,28 @@ const Board: React.FC = () => {
         } else {
           setWinner(null); // Tie
         }
+      }
+    };
+
+    const nextPlayer = currentPlayer === 'black' ? 'white' : 'black';
+    const nextPlayerValidMoves = getValidMoves(newBoard, nextPlayer);
+
+    if (nextPlayerValidMoves.length === 0) {
+      const otherPlayer = nextPlayer === 'black' ? 'white' : 'black';
+      const otherPlayerValidMoves = getValidMoves(newBoard, otherPlayer);
+      if (otherPlayerValidMoves.length === 0) {
+        // 両プレイヤーとも手がない場合、ゲームオーバー
+        evaluateGameEnd(newBoard);
       } else {
-        // Current player has no moves, but other player does, so other player plays again
+        // 現在のプレイヤーは手がないが、相手プレイヤーには手がある場合、相手プレイヤーが再度プレイ
         setCurrentPlayer(otherPlayer);
       }
     } else {
       setCurrentPlayer(nextPlayer);
     }
 
-    if (checkGameOver(newBoard)) {
-      setGameOver(true);
-      const score = getScore(newBoard);
-      if (score.black > score.white) {
-        setWinner('black');
-      } else if (score.white > score.black) {
-        setWinner('white');
-      } else {
-        setWinner(null); // Tie
-      }
-    }
+    // ターン終了後にゲーム終了を評価
+    evaluateGameEnd(newBoard);
   };
 
   const renderCells = () => {
