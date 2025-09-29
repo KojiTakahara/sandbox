@@ -1,30 +1,15 @@
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
-import './App.css';
+import Board from './Board';
+import './App.css'; // Keep App.css for general styling if needed, or remove if not used.
+import './Board.css'; // Import Board.css for board specific styles
 
 function App() {
-  const [count, setCount] = useState(0);
+  // 仮の初期ボード状態（全てempty）
+  const initialBoardState: ('black' | 'white' | 'empty')[][] = Array(8).fill(null).map(() => Array(8).fill('empty'));
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
-    </>
+    <div className="App">
+      <Board boardState={initialBoardState} />
+    </div>
   );
 }
 

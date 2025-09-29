@@ -1,0 +1,38 @@
+:root {
+  --othello-cell-size: 60px;
+  --othello-board-size: calc(var(--othello-cell-size) * 8);
+}
+
+.othello-board-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 1000px; /* For 3D effect */
+  margin-top: 50px;
+}
+
+.othello-board {
+  display: grid;
+  grid-template-columns: repeat(8, var(--othello-cell-size));
+  grid-template-rows: repeat(8, var(--othello-cell-size));
+  width: var(--othello-board-size); /* 8 * 60px */
+  height: var(--othello-board-size); /* 8 * 60px */
+  background-color: #006400; /* Dark green */
+  border: 10px solid #333; /* Board border */
+  border-radius: 5px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5), /* Outer shadow */
+              inset 0 0 15px rgba(0, 0, 0, 0.3); /* Inner shadow for depth */
+  transform: rotateX(20deg) rotateZ(5deg); /* Slight 3D tilt */
+  transform-style: preserve-3d;
+}
+
+.board-cell {
+  width: var(--othello-cell-size);
+  height: var(--othello-cell-size);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 100, 0, 0.8); /* Slightly lighter green for cells */
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+}
