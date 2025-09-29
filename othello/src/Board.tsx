@@ -1,16 +1,19 @@
 import React from 'react';
 import './Board.css';
-import Stone from './Stone'; // Import the Stone component
+import Stone from './Stone';
 
-const Board: React.FC = () => {
-  // For now, a simple 8x8 grid
+interface BoardProps {
+  boardState: ('black' | 'white' | 'empty')[][];
+}
+
+const Board: React.FC<BoardProps> = ({ boardState }) => {
   const renderCells = () => {
     const cells = [];
-    for (let i = 0; i < 8; i++) {
-      for (let j = 0; j < 8; j++) {
+    for (let i = 0; i < boardState.length; i++) {
+      for (let j = 0; j < boardState[i].length; j++) {
         cells.push(
           <div key={`${i}-${j}`} className="board-cell">
-            <Stone color="empty" /> {/* Render an empty stone for now */}
+            <Stone color={boardState[i][j]} />
           </div>
         );
       }

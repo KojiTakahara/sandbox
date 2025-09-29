@@ -1,3 +1,8 @@
+:root {
+  --othello-cell-size: 60px;
+  --othello-board-size: calc(var(--othello-cell-size) * 8);
+}
+
 .othello-board-container {
   display: flex;
   justify-content: center;
@@ -8,10 +13,10 @@
 
 .othello-board {
   display: grid;
-  grid-template-columns: repeat(8, 60px);
-  grid-template-rows: repeat(8, 60px);
-  width: 480px; /* 8 * 60px */
-  height: 480px; /* 8 * 60px */
+  grid-template-columns: repeat(8, var(--othello-cell-size));
+  grid-template-rows: repeat(8, var(--othello-cell-size));
+  width: var(--othello-board-size); /* 8 * 60px */
+  height: var(--othello-board-size); /* 8 * 60px */
   background-color: #006400; /* Dark green */
   border: 10px solid #333; /* Board border */
   border-radius: 5px;
@@ -22,8 +27,8 @@
 }
 
 .board-cell {
-  width: 60px;
-  height: 60px;
+  width: var(--othello-cell-size);
+  height: var(--othello-cell-size);
   border: 1px solid rgba(0, 0, 0, 0.2);
   display: flex;
   justify-content: center;
